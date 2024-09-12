@@ -1,25 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { useState } from 'react';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import Header from "./Components";
+import { useState } from "react";
+import Input from "./Components/Input";
 
 export default function App() {
-  const appName = "My app"
-  const [text, setText] = useState("");
-  
-    return (
+  const appName = "My app!";
+  return (
     <View style={styles.container}>
-      <StatusBar style="auto "/>
-      <Header name={appName}/>
-      <TextInput
-        placeholder="Type something"
-        keyboardType='default'
-        style={{ borderBottomColor: "purple", borderBottomWidth: 2}}
-        value={text}
-        onChangeText={function (changeText){setText(changeText);
-        }}
-        />
-        <Text>{text}</Text>
+      <StatusBar style="auto" />
+      <Header name={appName}></Header>
+      <Input />
+      {/* <Text>{text}</Text> */}
     </View>
   );
 }
@@ -27,8 +19,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
