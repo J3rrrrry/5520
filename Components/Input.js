@@ -22,6 +22,11 @@ export default function Input( {autoFocus }) {
     }
   };
 
+  const handleFocus = () => {
+    setShowCounter(true);
+    setMessage("");
+  };
+
   return (
     <TextInput
       placeholder="Type something"
