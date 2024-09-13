@@ -28,16 +28,21 @@ export default function Input( {autoFocus }) {
   };
 
   return (
-    <TextInput
-      placeholder="Type something"
-      autoCorrect={true}
-      keyboardType="default"
-      value={text}
-      style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
-      onChangeText={(changedText) => {
-        setText(changedText);
-      }}
-    />
+    <View style={styles.container}>
+      <TextInput
+        ref={inputRef}
+        style={styles.input}
+        value={text}
+        onChangeText={(value) => setText(value)}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        placeholder="Type something..."
+      />
+      {/* Show character count while typing */}
+      {showCounter && <Text>Character count: {text.length}</Text>}
+      {/* Display message when input loses focus */}
+      {message ? <Text>{message}</Text> : null}
+    </View>
   );
 }
 
