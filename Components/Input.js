@@ -13,6 +13,14 @@ export default function Input( {autoFocus }) {
     }
   }, [autoFocus]);
 
+  const handleBlur = () => {
+    setShowCounter(false);
+    if (text.length >= 3) {
+      setMessage("Thank you");
+    } else {
+      setMessage("Please type more than 3 characters");
+    }
+  };
 
   return (
     <TextInput
