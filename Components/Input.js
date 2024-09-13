@@ -1,8 +1,18 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-export default function Input() {
+export default function Input( {autoFocus }) {
   const [text, setText] = useState("");
+  const [showCounter, setShowCounter] = useState(false);
+  const [message, setMessage] = useState("");
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+        inputRef.current.focus();
+    }
+  }, [autoFocus]);
+
 
   return (
     <TextInput
