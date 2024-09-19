@@ -47,11 +47,13 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "purple",
+    marginVertical: 5,
   },
   topView: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: { flex: 4, backgroundColor: "#d5d", alignItems: "center" },
+  topView: { flex: 1, alignItems: "center", justifyContent: "space-evenly" },
+  bottomView: { flex: 4, backgroundColor: "#dcd", alignItems: "center" },
 });
