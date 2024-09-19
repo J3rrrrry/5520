@@ -21,7 +21,7 @@ export default function Input({
           autoCorrect={true}
           keyboardType="default"
           value={text}
-          style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
+          style={styles.input}
           onChangeText={(changedText) => {
             setText(changedText);
           }}
@@ -50,8 +50,9 @@ export default function Input({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
+  input: { borderColor: "purple", borderWidth: 2, padding: 5 },
 });
