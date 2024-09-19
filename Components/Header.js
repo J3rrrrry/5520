@@ -5,9 +5,18 @@ export default function Header({ name }) {
   return (
     <View>
       {/* use the prop here */}
-      <Text>Welcome to {name}</Text>
+      <Text style={styles.text}>Welcome to {name}</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  text: {
+    color: "darkmagenta",
+    fontSize: 25,
+    borderColor: "darkmagenta",
+    borderWidth: 2,
+    padding: 5,
+    marginBottom: 10,
+  },
+});
