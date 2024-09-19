@@ -1,16 +1,14 @@
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 
-export default function Input({ textInputFocus }) {
+export default function Input({ textInputFocus, inputHandler }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
-  
   function handleConfirm() {
-    console.log(text);
+    inputHandler(text);
   }
-
   return (
-    <View>
+    <>
       <TextInput
         autoFocus={textInputFocus}
         placeholder="Type something"
@@ -31,13 +29,14 @@ export default function Input({ textInputFocus }) {
       {blur ? (
         text.length >= 3 ? (
           <Text>Thank you</Text>
+        ) : (
+          <Text>Please type more than 3 characters</Text>
+        )
       ) : (
         text && <Text>{text.length}</Text>
       )}
-
       <Button title="Confirm" onPress={handleConfirm} />
-    </View>
+    </>
   );
 }
-
 const styles = StyleSheet.create({});
