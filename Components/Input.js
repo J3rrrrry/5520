@@ -1,47 +1,41 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
 
-export default function Input( {autoFocus }) {
+export default function Input({ textInputFocus }) {
   const [text, setText] = useState("");
-  const [showCounter, setShowCounter] = useState(false);
-  const [message, setMessage] = useState("");
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (autoFocus && inputRef.current) {
-        inputRef.current.focus();
-    }
-  }, [autoFocus]);
-
-  const handleBlur = () => {
-    setShowCounter(false);
-    if (text.length >= 3) {
-      setMessage("Thank you");
-    } else {
-      setMessage("Please type more than 3 characters");
-    }
-  };
-
-  const handleFocus = () => {
-    setShowCounter(true);
-    setMessage("");
-  };
+  const [blur, setBlur] = useState(false);
+  
+  function handleConfirm() {
+    console.log(text);
+  }
 
   return (
-    <View style={styles.container}>
+    <View>
       <TextInput
-        ref={inputRef}
-        style={styles.input}
+        autoFocus={textInputFocus}
+        placeholder="Type something"
+        autoCorrect={true}
+        keyboardType="default"
         value={text}
-        onChangeText={(value) => setText(value)}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="Type something..."
+        style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
+        onChangeText={(changedText) => {
+          setText(changedText);
+        }}
+        onBlur={() => {
+          setBlur(true);
+        }}
+        onFocus={() => {
+          setBlur(false);
+        }}
       />
-      {/* Show character count while typing */}
-      {showCounter && <Text>Character count: {text.length}</Text>}
-      {/* Display message when input loses focus */}
-      {message ? <Text>{message}</Text> : null}
+      {blur ? (
+        text.length >= 3 ? (
+          <Text>Thank you</Text>
+      ) : (
+        text && <Text>{text.length}</Text>
+      )}
+
+      <Button title="Confirm" onPress={handleConfirm} />
     </View>
   );
 }
