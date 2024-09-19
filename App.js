@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Header from "./Components/Header";
-import { useState } from "react";
 import Input from "./Components/Input";
 
 export default function App() {
@@ -10,8 +9,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name={appName}></Header>
-      <Input />
-      {/* <Text>{text}</Text> */}
+      <Input autoFocus={true} />
     </View>
   );
 }
