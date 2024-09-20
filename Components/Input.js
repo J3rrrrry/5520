@@ -9,6 +9,16 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
 
+  function handleConfirm() {
+    inputHandler(text);
+    setText(""); // Clear TextInput after confirm
+  }
+
+  function handleCancel() {
+    setText(""); // Clear TextInput on cancel
+    onCancel(); // Call the onCancel function passed from App.js
+  }
+
   return (
     <Modal animationType="slide" visible={isModalVisible}>
       <View style={styles.container}>
@@ -20,13 +30,9 @@ export default function Input({
           style={styles.input}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Confirm" onPress={() => {
-            inputHandler(text);
-            setText("");
-          }} />
-          {/* Add spacing between buttons */}
+          <Button title="Confirm" onPress={handleConfirm} />
           <View style={styles.spacing} />
-          <Button title="Cancel" onPress={onCancel} />
+          <Button title="Cancel" onPress={handleCancel} />
         </View>
       </View>
     </Modal>
