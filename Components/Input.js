@@ -24,6 +24,8 @@ export default function Input({
             inputHandler(text);
             setText("");
           }} />
+          {/* Add spacing between buttons */}
+          <View style={styles.spacing} />
           <Button title="Cancel" onPress={onCancel} />
         </View>
       </View>
@@ -48,5 +50,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
+    width: 200, // Adjust the width to ensure proper spacing
+  },
+  spacing: {
+    width: 10, // Adjust the spacing between buttons
   }
 });
