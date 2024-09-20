@@ -11,12 +11,12 @@ export default function Input({
 
   function handleConfirm() {
     inputHandler(text);
-    setText(""); // Clear TextInput after confirm
+    setText("");
   }
 
   function handleCancel() {
-    setText(""); // Clear TextInput on cancel
-    onCancel(); // Call the onCancel function passed from App.js
+    setText("");
+    onCancel();
   }
 
   return (
@@ -30,7 +30,11 @@ export default function Input({
           style={styles.input}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Confirm" onPress={handleConfirm} />
+          <Button
+            title="Confirm"
+            onPress={handleConfirm}
+            disabled={text.length < 3}
+          />
           <View style={styles.spacing} />
           <Button title="Cancel" onPress={handleCancel} />
         </View>
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
-    width: 200, // Adjust the width to ensure proper spacing
+    width: 200, // Ensure proper spacing
   },
   spacing: {
     width: 10, // Adjust the spacing between buttons
