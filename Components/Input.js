@@ -5,43 +5,27 @@ export default function Input({
   textInputFocus,
   inputHandler,
   isModalVisible,
+  onCancel,
 }) {
   const [text, setText] = useState("");
-  const [blur, setBlur] = useState(false);
-  function handleConfirm() {
-    // console.log(text);
-    inputHandler(text);
-  }
+
   return (
     <Modal animationType="slide" visible={isModalVisible}>
       <View style={styles.container}>
         <TextInput
           autoFocus={textInputFocus}
           placeholder="Type something"
-          autoCorrect={true}
-          keyboardType="default"
           value={text}
+          onChangeText={setText}
           style={styles.input}
-          onChangeText={(changedText) => {
-            setText(changedText);
-          }}
-          onBlur={() => {
-            setBlur(true);
-          }}
-          onFocus={() => {
-            setBlur(false);
-          }}
         />
-        {blur ? (
-          text.length >= 3 ? (
-            <Text>Thank you</Text>
-          ) : (
-            <Text>Please type more than 3 characters</Text>
-          )
-        ) : (
-          text && <Text>{text.length}</Text>
-        )}
-        <Button title="Confirm" onPress={handleConfirm} />
+        <View style={styles.buttonContainer}>
+          <Button title="Confirm" onPress={() => {
+            inputHandler(text);
+            setText("");
+          }} />
+          <Button title="Cancel" onPress={onCancel} />
+        </View>
       </View>
     </Modal>
   );
@@ -54,5 +38,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  input: { borderColor: "purple", borderWidth: 2, padding: 5 },
+  input: {
+    borderColor: "purple",
+    borderWidth: 2,
+    padding: 5,
+    width: 200,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  }
 });
