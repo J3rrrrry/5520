@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, SafeAreaView, StyleSheet, Text, View, Alert } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -8,30 +8,15 @@ export default function App() {
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const appName = "My app!";
-
+  // update to receive data
   function handleInputData(data) {
     console.log("App.js ", data);
     setReceivedData(data);
     setModalVisible(false);
   }
 
-  function handleCancel() {
-    Alert.alert(
-      "Confirm Cancel",
-      "Are you sure you want to cancel?",
-      [
-        {
-          text: "No",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { 
-          text: "Yes", 
-          onPress: () => setModalVisible(false) 
-        }
-      ],
-      { cancelable: false }
-    );
+  function dismissModal() {
+    setModalVisible(false);
   }
 
   return (
@@ -41,17 +26,21 @@ export default function App() {
         <Header name={appName}></Header>
         <Button
           title="Add a Goal"
-          onPress={() => setModalVisible(true)}
+          onPress={function () {
+            setModalVisible(true);
+          }}
         />
       </View>
       <Input
         textInputFocus={true}
         inputHandler={handleInputData}
         isModalVisible={modalVisible}
-        onCancel={handleCancel}
+        dismissModal={dismissModal}
       />
       <View style={styles.bottomView}>
-        <Text style={styles.text}>{receivedData}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{receivedData}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -61,11 +50,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    // alignItems: "center",
     justifyContent: "center",
   },
   text: {
     color: "purple",
-    marginVertical: 5,
+    padding: 5,
+    fontSize: 20,
+  },
+  textContainer: {
+    backgroundColor: "#aaa",
+    borderRadius: 5,
+    marginTop: 5,
   },
   topView: {
     flex: 1,
@@ -73,4 +69,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   bottomView: { flex: 4, backgroundColor: "#dcd", alignItems: "center" },
-});
+})
