@@ -7,11 +7,18 @@ import Input from "./Components/Input";
 export default function App() {
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
   const appName = "My app!";
   // update to receive data
   function handleInputData(data) {
     console.log("App.js ", data);
     setReceivedData(data);
+    let newGoal = { text: data, id: Math.random() };
+    //make a new obj and store the received data as the obj's text property
+    setGoals((prevGoals) => {
+      return [...prevGoals, newGoal];
+    });
+    // setReceivedData(data);
     setModalVisible(false);
   }
 
@@ -41,6 +48,14 @@ export default function App() {
         <View style={styles.textContainer}>
           <Text style={styles.text}>{receivedData}</Text>
         </View>
+        {/* use goals.map() and return a view and a text for each array items */}
+        {goals.map((goalObj) => {
+          return (
+            <View key={goalObj.id} style={styles.textContainer}>
+              <Text style={styles.text}>{goalObj.text}</Text>
+            </View>
+          );
+        })}
       </View>
     </SafeAreaView>
   );
@@ -69,4 +84,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   bottomView: { flex: 4, backgroundColor: "#dcd", alignItems: "center" },
-})
+});
