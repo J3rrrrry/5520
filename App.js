@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList,
 } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
@@ -28,11 +29,9 @@ export default function App() {
     // setReceivedData(data);
     setModalVisible(false);
   }
-
   function dismissModal() {
     setModalVisible(false);
   }
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -52,7 +51,18 @@ export default function App() {
         dismissModal={dismissModal}
       />
       <View style={styles.bottomView}>
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <FlatList
+          contentContainerStyle={styles.scrollViewContainer}
+          data={goals}
+          renderItem={({ item }) => {
+            return (
+              <View key={item.id} style={styles.textContainer}>
+                <Text style={styles.text}>{item.text}</Text>
+              </View>
+            );
+          }}
+        />
+        {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           {goals.map((goalObj) => {
             return (
               <View key={goalObj.id} style={styles.textContainer}>
@@ -60,12 +70,11 @@ export default function App() {
               </View>
             );
           })}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
