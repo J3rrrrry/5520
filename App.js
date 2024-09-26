@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -12,7 +19,7 @@ export default function App() {
   // update to receive data
   function handleInputData(data) {
     console.log("App.js ", data);
-    setReceivedData(data);
+
     let newGoal = { text: data, id: Math.random() };
     //make a new obj and store the received data as the obj's text property
     setGoals((prevGoals) => {
@@ -45,17 +52,15 @@ export default function App() {
         dismissModal={dismissModal}
       />
       <View style={styles.bottomView}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{receivedData}</Text>
-        </View>
-        {/* use goals.map() and return a view and a text for each array items */}
-        {goals.map((goalObj) => {
-          return (
-            <View key={goalObj.id} style={styles.textContainer}>
-              <Text style={styles.text}>{goalObj.text}</Text>
-            </View>
-          );
-        })}
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          {goals.map((goalObj) => {
+            return (
+              <View key={goalObj.id} style={styles.textContainer}>
+                <Text style={styles.text}>{goalObj.text}</Text>
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -68,20 +73,23 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "center",
   },
+  scrollViewContainer: {
+    alignItems: "center",
+  },
   text: {
     color: "purple",
-    padding: 5,
-    fontSize: 20,
+    padding: 50,
+    fontSize: 50,
   },
   textContainer: {
     backgroundColor: "#aaa",
     borderRadius: 5,
-    marginTop: 5,
+    marginTop: 50,
   },
   topView: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: { flex: 4, backgroundColor: "#dcd", alignItems: "center" },
+  bottomView: { flex: 4, backgroundColor: "#dcd" },
 });
