@@ -11,6 +11,7 @@ import {
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
   const [receivedData, setReceivedData] = useState("");
@@ -20,7 +21,6 @@ export default function App() {
   // update to receive data
   function handleInputData(data) {
     console.log("App.js ", data);
-
     let newGoal = { text: data, id: Math.random() };
     //make a new obj and store the received data as the obj's text property
     setGoals((prevGoals) => {
@@ -55,11 +55,7 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
           renderItem={({ item }) => {
-            return (
-              <View key={item.id} style={styles.textContainer}>
-                <Text style={styles.text}>{item.text}</Text>
-              </View>
-            );
+            return <GoalItem goalObj={item} />;
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -85,16 +81,7 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     alignItems: "center",
   },
-  text: {
-    color: "purple",
-    padding: 50,
-    fontSize: 50,
-  },
-  textContainer: {
-    backgroundColor: "#aaa",
-    borderRadius: 5,
-    marginTop: 50,
-  },
+
   topView: {
     flex: 1,
     alignItems: "center",
