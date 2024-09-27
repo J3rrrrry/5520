@@ -44,6 +44,10 @@ export default function App() {
     );
   }
 
+  const ItemSeparator = () => {
+    return <View style={styles.separator} />;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -62,21 +66,25 @@ export default function App() {
       />
       <View style={styles.bottomView}>
         <FlatList
-          contentContainerStyle={styles.scrollViewContainer}
           data={goals}
-          renderItem={({ item }) => <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />}
+          renderItem={({ item }) => (
+            <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />
+          )}
           ListEmptyComponent={() => (
             <View style={styles.emptyContainer}>
               <Text style={styles.emptyText}>No goals to show</Text>
             </View>
           )}
-          ListHeaderComponent={() => goals.length > 0 && <Text style={styles.listHeader}>My goals</Text>}
-          ListFooterComponent={() => 
+          ListHeaderComponent={() =>
+            goals.length > 0 && <Text style={styles.listHeader}>My goals</Text>
+          }
+          ListFooterComponent={() =>
             goals.length > 0 ? (
               <Button title="Delete All" onPress={confirmDeleteAll} />
             ) : null
           }
-          keyExtractor={item => item.id}
+          ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={(item) => item.id}
         />
       </View>
     </SafeAreaView>
@@ -87,19 +95,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    justifyContent: "center",
-  },
-  scrollViewContainer: {
-    flexGrow: 1,
   },
   topView: {
-    flex: 1,
+    flex: 0.2,
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: { 
-    flex: 4, 
-    backgroundColor: "#dcd" 
+  bottomView: {
+    flex: 1,
+    backgroundColor: "#dcd",
   },
   emptyContainer: {
     flex: 1,
@@ -113,10 +117,15 @@ const styles = StyleSheet.create({
   },
   listHeader: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: "darkblue",
     padding: 10,
     backgroundColor: "#f3f3f3",
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#888",
+    width: "100%",
+  },
 });
