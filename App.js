@@ -6,6 +6,7 @@ import {
   Text,
   View,
   FlatList,
+  Alert
 } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
@@ -30,6 +31,17 @@ export default function App() {
 
   function handleGoalDelete(deletedId) {
     setGoals((prevGoals) => prevGoals.filter((goalObj) => goalObj.id !== deletedId));
+  }
+
+  function confirmDeleteAll() {
+    Alert.alert(
+      "Delete All Goals",
+      "Are you sure you want to delete all goals?",
+      [
+        { text: "No", style: "cancel" },
+        { text: "Yes", onPress: () => setGoals([]) }
+      ]
+    );
   }
 
   return (
@@ -59,6 +71,11 @@ export default function App() {
             </View>
           )}
           ListHeaderComponent={() => goals.length > 0 && <Text style={styles.listHeader}>My goals</Text>}
+          ListFooterComponent={() => 
+            goals.length > 0 ? (
+              <Button title="Delete All" onPress={confirmDeleteAll} />
+            ) : null
+          }
           keyExtractor={item => item.id}
         />
       </View>
