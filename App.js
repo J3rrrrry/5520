@@ -13,17 +13,14 @@ import Input from "./Components/Input";
 import GoalItem from "./Components/GoalItem";
 
 export default function App() {
-  const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const appName = "My app!";
 
   function handleInputData(data) {
     console.log("App.js ", data);
-    let newGoal = { text: data, id: Math.random() };
-    setGoals((prevGoals) => {
-      return [...prevGoals, newGoal];
-    });
+    let newGoal = { text: data, id: Math.random().toString() };
+    setGoals((prevGoals) => [...prevGoals, newGoal]);
     setModalVisible(false);
   }
 
@@ -32,11 +29,7 @@ export default function App() {
   }
 
   function handleGoalDelete(deletedId) {
-    setGoals((prevGoals) => {
-      return prevGoals.filter((goalObj) => {
-        return goalObj.id != deletedId;
-      });
-    });
+    setGoals((prevGoals) => prevGoals.filter((goalObj) => goalObj.id !== deletedId));
   }
 
   return (
@@ -46,9 +39,7 @@ export default function App() {
         <Header name={appName}></Header>
         <Button
           title="Add a Goal"
-          onPress={function () {
-            setModalVisible(true);
-          }}
+          onPress={() => setModalVisible(true)}
         />
       </View>
       <Input
@@ -61,14 +52,14 @@ export default function App() {
         <FlatList
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
-          renderItem={({ item }) => {
-            return <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />;
-          }}
+          renderItem={({ item }) => <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />}
           ListEmptyComponent={() => (
             <View style={styles.emptyContainer}>
               <Text style={styles.emptyText}>No goals to show</Text>
             </View>
           )}
+          ListHeaderComponent={() => goals.length > 0 && <Text style={styles.listHeader}>My goals</Text>}
+          keyExtractor={item => item.id}
         />
       </View>
     </SafeAreaView>
@@ -82,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scrollViewContainer: {
-    alignItems: "center",
+    flexGrow: 1,
   },
   topView: {
     flex: 1,
@@ -103,4 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "grey",
   },
+  listHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: "darkblue",
+    padding: 10,
+    backgroundColor: "#f3f3f3",
+    textAlign: 'center'
+  }
 });
