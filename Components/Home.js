@@ -41,9 +41,9 @@ export default function Home({ navigation }) {
     });
   }
 
-  function handleGoalPress() {
-    // navigate to GoalDetails
-    navigation.navigate("Details");
+  function handleGoalPress(pressedGoal) {
+    console.log(pressedGoal);
+    navigation.navigate("Details", { goalData: pressedGoal });
   }
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [

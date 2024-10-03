@@ -7,7 +7,7 @@ export default function GoalItem({ goalObj, deleteHandler, pressHandler }) {
     deleteHandler(goalObj.id);
   }
   function handlePress() {
-    pressHandler();
+    pressHandler(goalObj);
   }
   return (
     <View style={styles.textContainer}>
