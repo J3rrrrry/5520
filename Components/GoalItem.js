@@ -16,15 +16,19 @@ export default function GoalItem({ goalObj, deleteHandler }) {
 
 const styles = StyleSheet.create({
   text: {
-    color: "purple",
-    padding: 5,
-    fontSize: 30,
+    color: "#fff",
+    fontSize: 18,
+    padding: 10,
   },
   textContainer: {
-    backgroundColor: "#aaa",
-    borderRadius: 5,
-    marginTop: 50,
+    backgroundColor: "#6a5acd",
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    padding: 10,
+    width: '90%',
+    alignSelf: 'center',
   },
 });

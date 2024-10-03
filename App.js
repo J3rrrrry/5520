@@ -2,11 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import {
   Button,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
   FlatList,
+  Alert
 } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
@@ -14,31 +14,40 @@ import Input from "./Components/Input";
 import GoalItem from "./Components/GoalItem";
 
 export default function App() {
-  const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const appName = "My app!";
-  // update to receive data
+
   function handleInputData(data) {
     console.log("App.js ", data);
-    let newGoal = { text: data, id: Math.random() };
-    //make a new obj and store the received data as the obj's text property
-    setGoals((prevGoals) => {
-      return [...prevGoals, newGoal];
-    });
-    // setReceivedData(data);
+    let newGoal = { text: data, id: Math.random().toString() };
+    setGoals((prevGoals) => [...prevGoals, newGoal]);
     setModalVisible(false);
   }
+
   function dismissModal() {
     setModalVisible(false);
   }
+
   function handleGoalDelete(deletedId) {
-    setGoals((prevGoals) => {
-      return prevGoals.filter((goalObj) => {
-        return goalObj.id != deletedId;
-      });
-    });
+    setGoals((prevGoals) => prevGoals.filter((goalObj) => goalObj.id !== deletedId));
   }
+
+  function confirmDeleteAll() {
+    Alert.alert(
+      "Delete All Goals",
+      "Are you sure you want to delete all goals?",
+      [
+        { text: "No", style: "cancel" },
+        { text: "Yes", onPress: () => setGoals([]) }
+      ]
+    );
+  }
+
+  const ItemSeparator = () => {
+    return <View style={styles.separator} />;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -46,9 +55,7 @@ export default function App() {
         <Header name={appName}></Header>
         <Button
           title="Add a Goal"
-          onPress={function () {
-            setModalVisible(true);
-          }}
+          onPress={() => setModalVisible(true)}
         />
       </View>
       <Input
@@ -59,39 +66,66 @@ export default function App() {
       />
       <View style={styles.bottomView}>
         <FlatList
-          contentContainerStyle={styles.scrollViewContainer}
           data={goals}
-          renderItem={({ item }) => {
-            return <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />;
-          }}
+          renderItem={({ item }) => (
+            <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />
+          )}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No goals to show</Text>
+            </View>
+          )}
+          ListHeaderComponent={() =>
+            goals.length > 0 && <Text style={styles.listHeader}>My goals</Text>
+          }
+          ListFooterComponent={() =>
+            goals.length > 0 ? (
+              <Button title="Delete All" onPress={confirmDeleteAll} />
+            ) : null
+          }
+          ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={(item) => item.id}
         />
-        {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-          {goals.map((goalObj) => {
-            return (
-              <View key={goalObj.id} style={styles.textContainer}>
-                <Text style={styles.text}>{goalObj.text}</Text>
-              </View>
-            );
-          })}
-        </ScrollView> */}
       </View>
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    justifyContent: "center",
-  },
-  scrollViewContainer: {
-    alignItems: "center",
   },
   topView: {
-    flex: 1,
+    flex: 0.2,
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: { flex: 4, backgroundColor: "#dcd" },
+  bottomView: {
+    flex: 1,
+    backgroundColor: "#dcd",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 20,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: "grey",
+  },
+  listHeader: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "darkblue",
+    padding: 10,
+    backgroundColor: "#f3f3f3",
+    textAlign: "center",
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#888",
+    width: "100%",
+  },
 });
