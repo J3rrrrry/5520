@@ -7,12 +7,14 @@ import {
   Text,
   View,
   FlatList,
+  Alert,
 } from "react-native";
 import Header from "./Header";
 import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
-export default function Home() {
+
+export default function Home({ navigation }) {
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -38,6 +40,11 @@ export default function Home() {
       });
     });
   }
+
+  function handleGoalPress() {
+    // navigate to GoalDetails
+    navigation.navigate("Details");
+  }
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
@@ -49,7 +56,6 @@ export default function Home() {
       { text: "No", style: "cancel" },
     ]);
   }
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -90,7 +96,13 @@ export default function Home() {
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
           renderItem={({ item }) => {
-            return <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />;
+            return (
+              <GoalItem
+                pressHandler={handleGoalPress}
+                deleteHandler={handleGoalDelete}
+                goalObj={item}
+              />
+            );
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
