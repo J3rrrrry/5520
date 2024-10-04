@@ -7,39 +7,42 @@ import { Button } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
-const defaultScreenOptions = {
-  headerStyle: { backgroundColor: "purple" },
-  headerTintColor: "white",
-  headerTitleStyle: { fontWeight: "bold" },
-};
-
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={defaultScreenOptions}
+        screenOptions={{
+          headerStyle: { backgroundColor: "purple" },
+          headerTintColor: "white",
+          headerTitleStyle: { fontWeight: 'bold', fontSize: 20,
+           },
+        }}
       >
         <Stack.Screen
           name="Home"
           component={Home}
           options={{
-            title: "My Goals",
+            title: "All Goals",
           }}
         />
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={({ route }) => ({
-            title: route.params ? route.params.goalData.text : "More Details",
-            headerRight: () => (
-              <Button
-                title="Warning"
-                onPress={() => {
-                  console.log("warning");
-                }}
-              />
-            ),
-          })}
+          options={({ route }) => {
+            return {
+              title: route.params ? route.params.goalData.text : "More Details",
+              headerRight: () => {
+                return (
+                  <Button
+                    title="Warning"
+                    onPress={() => {
+                      console.log("Warning");
+                    }}
+                  />
+                );
+              },
+            };
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
