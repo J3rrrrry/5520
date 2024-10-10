@@ -2,7 +2,6 @@ import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
-
 export default function GoalItem({ goalObj, deleteHandler }) {
   const navigation = useNavigation();
   function handleDelete() {
@@ -29,7 +28,7 @@ export default function GoalItem({ goalObj, deleteHandler }) {
         <PressableButton
           componentStyle={styles.deleteButton}
           pressedHandler={handleDelete}
-          // pressedStyle={styles.pressedStyle}
+          pressedStyle={styles.pressedStyle}
         >
           <Text style={styles.deleteText}>X</Text>
         </PressableButton>
