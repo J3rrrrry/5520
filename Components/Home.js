@@ -7,12 +7,13 @@ import {
   Text,
   View,
   FlatList,
-  Alert,
+  Alert
 } from "react-native";
 import Header from "./Header";
 import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 
 export default function Home({ navigation }) {
   const [receivedData, setReceivedData] = useState("");
@@ -40,7 +41,12 @@ export default function Home({ navigation }) {
       });
     });
   }
-
+  // function handleGoalPress(pressedGoal) {
+  //   //receive the goal obj
+  //   console.log(pressedGoal);
+  //   // navigate to GoalDetails and pass goal obj as params
+  //   navigation.navigate("Details", { goalData: pressedGoal });
+  // }
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
@@ -57,12 +63,20 @@ export default function Home({ navigation }) {
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name={appName}></Header>
-        <Button
+        <PressableButton
+          pressedHandler={function () {
+            setModalVisible(true);
+          }}
+          componentStyle={{ backgroundColor: "purple" }}
+        >
+          <Text style={styles.buttonText}>Add a Goal</Text>
+        </PressableButton>
+        {/* <Button
           title="Add a Goal"
           onPress={function () {
             setModalVisible(true);
           }}
-        />
+        /> */}
       </View>
       <Input
         textInputFocus={true}
@@ -92,12 +106,7 @@ export default function Home({ navigation }) {
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
           renderItem={({ item }) => {
-            return (
-              <GoalItem
-                deleteHandler={handleGoalDelete}
-                goalObj={item}
-              />
-            );
+            return <GoalItem deleteHandler={handleGoalDelete} goalObj={item} />;
           }}
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -113,11 +122,11 @@ export default function Home({ navigation }) {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    // alignItems: "center",
     justifyContent: "center",
   },
   scrollViewContainer: {
@@ -128,16 +137,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: {
-    flex: 4,
-    backgroundColor: "#dcd",
-  },
-  scrollViewContainer: {
-    alignItems: "center",
-  },
+  bottomView: { flex: 4, backgroundColor: "#dcd" },
   header: {
     color: "indigo",
     fontSize: 25,
     marginTop: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
   },
 });
