@@ -41,10 +41,6 @@ export default function Home({ navigation }) {
     });
   }
 
-  function handleGoalPress(pressedGoal) {
-    console.log(pressedGoal);
-    navigation.navigate("Details", { goalData: pressedGoal });
-  }
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
@@ -98,7 +94,6 @@ export default function Home({ navigation }) {
           renderItem={({ item }) => {
             return (
               <GoalItem
-                pressHandler={handleGoalPress}
                 deleteHandler={handleGoalDelete}
                 goalObj={item}
               />
@@ -118,11 +113,11 @@ export default function Home({ navigation }) {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
     justifyContent: "center",
   },
   scrollViewContainer: {
@@ -133,7 +128,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  bottomView: { flex: 4, backgroundColor: "#dcd" },
+  bottomView: {
+    flex: 4,
+    backgroundColor: "#dcd",
+  },
+  scrollViewContainer: {
+    alignItems: "center",
+  },
   header: {
     color: "indigo",
     fontSize: 25,
