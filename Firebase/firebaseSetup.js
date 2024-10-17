@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 import {
   apiKey,
@@ -8,7 +9,7 @@ import {
   messagingSenderId,
   appId,
 } from "@env";
-// Your web app's Firebase configuration
+
 const firebaseConfig = {
   apiKey: apiKey,
   authDomain: authDomain,
@@ -20,3 +21,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+export const database = getFirestore(app);
