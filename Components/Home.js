@@ -27,56 +27,45 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const appName = "My app!";
-  // update to receive data
+
   useEffect(() => {
-    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
         newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
       });
       setGoals(newArray);
     });
+
+    return () => unsubscribe();
   }, []);
+
   function handleInputData(data) {
-    console.log("App.js ", data);
     let newGoal = { text: data };
     writeToDB(newGoal, "goals");
-    //make a new obj and store the received data as the obj's text property
-    // setGoals((prevGoals) => {
-    //   return [...prevGoals, newGoal];
-    // });
-    // setReceivedData(data);
     setModalVisible(false);
   }
+
   function dismissModal() {
     setModalVisible(false);
   }
+
   function handleGoalDelete(deletedId) {
-    // setGoals((prevGoals) => {
-    //   return prevGoals.filter((goalObj) => {
-    //     return goalObj.id != deletedId;
-    //   });
-    // });
     deleteFromDB(deletedId, "goals");
   }
-  // function handleGoalPress(pressedGoal) {
-  //   //receive the goal obj
-  //   console.log(pressedGoal);
-  //   // navigate to GoalDetails and pass goal obj as params
-  //   navigation.navigate("Details", { goalData: pressedGoal });
-  // }
+
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
         text: "Yes",
         onPress: () => {
-          // setGoals([]);
           deleteAllFromDB("goals");
         },
       },
       { text: "No", style: "cancel" },
     ]);
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -90,12 +79,6 @@ export default function Home({ navigation }) {
         >
           <Text style={styles.buttonText}>Add a Goal</Text>
         </PressableButton>
-        {/* <Button
-          title="Add a Goal"
-          onPress={function () {
-            setModalVisible(true);
-          }}
-        /> */}
       </View>
       <Input
         textInputFocus={true}
@@ -136,24 +119,15 @@ export default function Home({ navigation }) {
             );
           }}
         />
-        {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-          {goals.map((goalObj) => {
-            return (
-              <View key={goalObj.id} style={styles.textContainer}>
-                <Text style={styles.text}>{goalObj.text}</Text>
-              </View>
-            );
-          })}
-        </ScrollView> */}
       </View>
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
     justifyContent: "center",
   },
   scrollViewContainer: {
