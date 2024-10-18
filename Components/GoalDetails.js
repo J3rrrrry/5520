@@ -17,6 +17,7 @@ export default function GoalDetails({ navigation, route }) {
 
     if (route.params && route.params.goalData) {
       const goalId = route.params.goalData.id;
+      const collectionName = "goals";
       await setWarningFlag(goalId);
     }
   }

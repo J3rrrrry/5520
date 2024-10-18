@@ -36,9 +36,9 @@ export async function deleteAllFromDB(collectionName) {
     }
 }
 
-export async function setWarningFlag(goalId, collectionName) {
+export const setWarningFlag = async(goalId) => {
     try {
-        const goalRef = doc(database, collectionName, goalId);
+        const goalRef = doc(database, "goals", goalId);
         await updateDoc(goalRef, { warning: true });
         console.log("Warning flag set in Firestore");
     } catch (err) {
