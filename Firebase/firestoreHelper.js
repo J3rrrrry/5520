@@ -40,8 +40,8 @@ export async function setWarningFlag(goalId, collectionName) {
     try {
         const goalRef = doc(database, collectionName, goalId);
         await updateDoc(goalRef, { warning: true });
-        console.log("Warning flag set");
+        console.log("Warning flag set in Firestore");
     } catch (err) {
-        console.log("Error setting warning flag: ", err);
+        console.log("Error setting warning flag in Firestore: ", err);
     }
 }
