@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native-web";
 
 export default function GoalUsers() {
   const [users, setUsers] = useState([]);
@@ -12,14 +11,17 @@ export default function GoalUsers() {
           "https://jsonplaceholder.typicode.com/users/"
         );
         if (!response.ok) {
-          // what to do in case of an HTTP error e.g. 404
-          // throw an error
           throw new Error(
             `An HTTP error happened with status: ${response.status}`
           );
         }
         const data = await response.json();
         // set the users state variable from the data
+        setUsers(
+          data.map((user) => {
+            return user.name;
+          })
+        );
       } catch (err) {
         console.log("fetch user data ", err);
       }
@@ -28,9 +30,13 @@ export default function GoalUsers() {
   }, []);
   return (
     <View>
-      <FlatList />
+      <FlatList
+        data={users}
+        renderItem={({ item }) => {
+          return <Text>{item}</Text>;
+        }}
+      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({});
