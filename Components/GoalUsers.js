@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
-export default function GoalUsers() {
+export default function GoalUsers({ id }) {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     // fetch data
@@ -15,8 +16,11 @@ export default function GoalUsers() {
             `An HTTP error happened with status: ${response.status}`
           );
         }
+        // this code will only execute if the response.ok is true
+        //extract data
         const data = await response.json();
         // set the users state variable from the data
+        data.forEach((user) => writeToDB(user, `goals/${id}/users`));
         setUsers(
           data.map((user) => {
             return user.name;
