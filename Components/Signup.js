@@ -1,15 +1,40 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { auth } from "../Firebase/firebaseSetup";
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const loginHandler = () => {
     navigation.replace("Login");
   };
-  const signupHandler = async () => {};
+  const signupHandler = async () => {
+    try {
+      if (
+        email.length === 0 ||
+        password.length === 0 ||
+        confirmPassword.length === 0
+      ) {
+        Alert.alert("All fields should be provided");
+        return;
+      }
+      if (password !== confirmPassword) {
+        Alert.alert("password and confirm password don't match");
+        return;
+      }
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(userCred.user);
+    } catch (err) {
+      console.log("sign up ", err);
+      Alert.alert(err.message);
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Email</Text>
@@ -46,12 +71,10 @@ export default function Signup({ navigation }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "stretch",
     justifyContent: "center",
   },
   input: {
