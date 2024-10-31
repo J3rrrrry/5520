@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { setWarningFlag } from "../Firebase/firestoreHelper";
+import GoalUsers from "./GoalUsers";
 
 export default function GoalDetails({ navigation, route }) {
   function moreDetailsHandler() {
@@ -50,6 +51,7 @@ export default function GoalDetails({ navigation, route }) {
                 <Text style={warning && styles.warningStyle}>More details</Text>
             )}
             <Button title="More Details" onPress={moreDetailsHandler} />
+            {route.params && <GoalUsers id={route.params.goalData.id} />}
         </View>
     );
 }
