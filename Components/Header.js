@@ -11,7 +11,6 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function Header({ name }) {
   const { width, height } = useWindowDimensions();
-  console.log(width);
   return (
     <View>
       {/* use the prop here */}
