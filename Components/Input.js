@@ -8,8 +8,8 @@ import {
   View,
   Image,
 } from "react-native";
-
 import React, { useState } from "react";
+import ImageManager from "./ImageManager";
 
 export default function Input({
   textInputFocus,
@@ -25,7 +25,6 @@ export default function Input({
     inputHandler(text);
     setText("");
   }
-
   function handleCancel() {
     // hide the modal
     Alert.alert("Cancel", "Are you sure you want to cancel", [
@@ -39,7 +38,6 @@ export default function Input({
       },
     ]);
   }
-
   return (
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
@@ -52,7 +50,7 @@ export default function Input({
             alt="Image of a an arrow"
           />
           <Image
-            source={require("../assets/localImage.png")}
+            source={require("../assets/goal.png")}
             style={styles.image}
             alt="Image of a an arrow"
           />
@@ -82,6 +80,7 @@ export default function Input({
           ) : (
             text && <Text>{text.length}</Text>
           )}
+          <ImageManager />
           <View style={styles.buttonsRow}>
             <View style={styles.buttonContainer}>
               <Button title="Cancel" onPress={handleCancel} />
@@ -99,11 +98,10 @@ export default function Input({
     </Modal>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
