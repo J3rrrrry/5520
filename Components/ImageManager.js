@@ -1,10 +1,11 @@
 import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 // import { launchCameraAsync } from "expo-image-picker";
 import * as ImagePicker from "expo-image-picker";
 
 export default function ImageManager() {
   const [response, requestPermission] = ImagePicker.useCameraPermissions();
+  const [imageUri, setImageUri] = useState("");
   async function verifyPermission() {
     try {
       //check if user has given permission
@@ -28,12 +29,14 @@ export default function ImageManager() {
         Alert.alert("You need to give permission for camera");
         return;
       }
-
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
       });
       console.log(result);
       // read the fist element from assets array, and access its uri
+      if (!result.canceled) {
+        setImageUri(result.assets[0].uri);
+      }
     } catch (err) {
       console.log("take image ", err);
     }
@@ -41,9 +44,17 @@ export default function ImageManager() {
   return (
     <View>
       <Button title="Take An Image" onPress={takeImageHandler} />
-      <Image />
+      {imageUri && (
+        <Image
+          source={{
+            uri: imageUri,
+          }}
+          style={styles.image}
+          alt="preview of the image taken"
+        />
+      )}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({ image: { width: 100, height: 100 } });
