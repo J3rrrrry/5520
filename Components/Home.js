@@ -22,7 +22,6 @@ import {
 } from "../Firebase/firestoreHelper";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ref, uploadBytesResumable } from "firebase/storage";
-
 export default function Home({ navigation }) {
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +49,6 @@ export default function Home({ navigation }) {
     );
     return () => unsubscribe();
   }, []);
-
   async function fetchAndUploadImage(uri) {
     try {
       const response = await fetch(uri);
@@ -69,6 +67,7 @@ export default function Home({ navigation }) {
       console.log("fetch and upload image ", err);
     }
   }
+  // receive text and image uri
   async function handleInputData(data) {
     console.log("App.js ", data);
     // upload the image to storage, and get a storage ref
@@ -80,7 +79,7 @@ export default function Home({ navigation }) {
     // add info about owner of the goal
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
     if (uri) {
-      newGoal = { ...newGoal, uri: uri };
+      newGoal = { ...newGoal, imageUri: uri };
     }
     writeToDB(newGoal, "goals");
     //make a new obj and store the received data as the obj's text property
