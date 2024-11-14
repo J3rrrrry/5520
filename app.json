@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "jerry",
-    "slug": "jerry",
+    "name": "Fall2024-Tue",
+    "slug": "Fall2024-Tue",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
@@ -22,6 +22,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "The app accesses your camera to let you take a picture and share them with your friends."
+        }
+      ]
+    ]
   }
 }

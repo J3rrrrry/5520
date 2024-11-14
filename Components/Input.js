@@ -8,9 +8,8 @@ import {
   View,
   Image,
 } from "react-native";
-
 import React, { useState } from "react";
-
+import ImageManager from "./ImageManager";
 export default function Input({
   textInputFocus,
   inputHandler,
@@ -19,13 +18,13 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
+  const [imageUri, setImageUri] = useState("");
   const minimumChar = 3;
   function handleConfirm() {
     // console.log(text);
-    inputHandler(text);
+    inputHandler({ text, imageUri });
     setText("");
   }
-
   function handleCancel() {
     // hide the modal
     Alert.alert("Cancel", "Are you sure you want to cancel", [
@@ -39,7 +38,10 @@ export default function Input({
       },
     ]);
   }
-
+  function receiveImageUri(uri) {
+    console.log("In Input ", uri);
+    setImageUri(uri);
+  }
   return (
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
@@ -52,7 +54,7 @@ export default function Input({
             alt="Image of a an arrow"
           />
           <Image
-            source={require("../assets/localImage.png")}
+            source={require("../assets/goal.png")}
             style={styles.image}
             alt="Image of a an arrow"
           />
@@ -82,6 +84,7 @@ export default function Input({
           ) : (
             text && <Text>{text.length}</Text>
           )}
+          <ImageManager receiveImageUri={receiveImageUri} />
           <View style={styles.buttonsRow}>
             <View style={styles.buttonContainer}>
               <Button title="Cancel" onPress={handleCancel} />
@@ -99,11 +102,10 @@ export default function Input({
     </Modal>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
