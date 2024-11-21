@@ -11,7 +11,10 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import Profile from "./Components/Profile";
 import PressableButton from "./Components/PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Map from "./Components/Map";
+
 const Stack = createNativeStackNavigator();
+
 const authStack = (
   <>
     <Stack.Screen name="Signup" component={Signup} />
@@ -78,6 +81,7 @@ const appStack = (
         },
       }}
     />
+    <Stack.Screen name="Map" component={Map} />
   </>
 );
 export default function App() {
